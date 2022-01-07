@@ -5,7 +5,7 @@ import { MainScreen } from '../screens/MainScreen'
 import { PostScreen } from '../screens/PostScreen'
 import { THEME } from '../theme'
 
-const PostNavigator = createStackNavigator(
+const BlogNavigator = createStackNavigator(
   {
     'My blog': MainScreen,
     Post: {
@@ -27,4 +27,4 @@ const PostNavigator = createStackNavigator(
   }
 )
 
-export const AppNavigation = createAppContainer(PostNavigator)
+export const AppNavigation = createAppContainer(BlogNavigator)
