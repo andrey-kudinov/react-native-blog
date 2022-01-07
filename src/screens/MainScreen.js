@@ -6,7 +6,11 @@ import { AppHeaderIcon } from '../components/AppHeaderIcon'
 
 export const MainScreen = ({ navigation }) => {
   const handleOpenPost = post => {
-    navigation.navigate('Post', { postId: post.id, date: post.date })
+    navigation.navigate('Post', {
+      postId: post.id,
+      date: post.date,
+      bookmarked: post.bookmarked
+    })
   }
 
   return (
@@ -22,12 +26,21 @@ export const MainScreen = ({ navigation }) => {
 
 MainScreen.navigationOptions = {
   title: 'Hello!',
-  headerRight: (
+  headerRight: () => (
     <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
       <Item
         title='Take photo'
         iconName='ios-camera'
         onPress={() => console.log('camera')}
+      />
+    </HeaderButtons>
+  ),
+  headerLeft: () => (
+    <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
+      <Item
+        title='Take photo'
+        iconName='ios-menu'
+        onPress={() => console.log('menu')}
       />
     </HeaderButtons>
   )
