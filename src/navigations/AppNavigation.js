@@ -16,9 +16,13 @@ const PostNavigator = createStackNavigator(
     initialRouteName: 'My blog',
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: Platform === 'android' ? THEME.MAIN_COLOR : 'white'
+        backgroundColor: Platform === 'android' ? THEME.MAIN_COLOR : 'white',
+        
       },
-      headerTintColor: Platform === 'android' ? 'white' : THEME.MAIN_COLOR
+      headerTintColor: Platform === 'android' ? 'white' : THEME.MAIN_COLOR,
+      headerTitleStyle: {
+        fontFamily: 'roboto'
+      }
     }
   }
 )
