@@ -1,14 +1,12 @@
 import { useState } from 'react'
-import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View } from 'react-native'
-import { AppLoading } from 'expo'
+import AppLoading from 'expo-app-loading'
 import { AppNavigation } from './src/navigations/AppNavigation'
 import { fonts } from './src/fonts'
 
 export default function App() {
   const [isReady, setIsReady] = useState(false)
 
-  if (isReady) {
+  if (!isReady) {
     return (
       <AppLoading
         startAsync={fonts}
