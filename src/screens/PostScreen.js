@@ -7,8 +7,10 @@ import {
   ScrollView,
   Alert
 } from 'react-native'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { DATA } from '../data'
 import { THEME } from '../theme'
+import { AppHeaderIcon } from '../components/AppHeaderIcon'
 
 export const PostScreen = ({ navigation }) => {
   const postId = navigation.getParam('postId')
@@ -21,7 +23,11 @@ export const PostScreen = ({ navigation }) => {
         text: 'Cancel',
         style: 'cancel'
       },
-      { text: 'OK', style: 'destructive', onPress: () => console.log('OK Pressed') }
+      {
+        text: 'OK',
+        style: 'destructive',
+        onPress: () => console.log('OK Pressed')
+      }
     ])
   }
 
@@ -41,8 +47,22 @@ export const PostScreen = ({ navigation }) => {
 }
 
 PostScreen.navigationOptions = ({ navigation }) => {
-  const date = navigation.getParam('date')
-  return { title: `Post ${new Date(date).toLocaleDateString()}` }
+  const date = navigation.getParam('date'),
+    bookmarked = navigation.getParam('bookmarked'),
+    iconName = bookmarked ? 'ios-star' : 'ios-star-outline'
+
+  return {
+    title: `Post ${new Date(date).toLocaleDateString()}`,
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
+        <Item
+          title='Take photo'
+          iconName={iconName}
+          onPress={() => console.log('camera')}
+        />
+      </HeaderButtons>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
