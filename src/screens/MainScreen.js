@@ -1,7 +1,16 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Button } from 'react-native'
 
-export const MainScreen = () => {
-  return <View style={StyleSheet.wrapper}><Text>MainScreen</Text></View>
+export const MainScreen = ({ navigation }) => {
+  const toPost = () => {
+    navigation.navigate('Post')
+  }
+
+  return (
+    <View style={styles.wrapper}>
+      <Text>MainScreen</Text>
+      <Button title='to Post' onPress={toPost} />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
