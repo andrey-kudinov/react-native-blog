@@ -18,7 +18,7 @@ const navigatorOptions = {
   },
   headerTintColor: Platform === 'android' ? 'white' : THEME.MAIN_COLOR,
   headerTitleStyle: {
-    fontFamily: 'roboto'
+    fontFamily: 'roboto-bold'
   }
 }
 
@@ -81,22 +81,46 @@ const BottomNavigator =
         }
       })
 
-const CreateNavigator = createStackNavigator({
-  'Create Post': CreateScreen
-}, navigatorOptions)
-
-const AboutNavigator = createStackNavigator({
-  About: AboutScreen
-}, navigatorOptions)
-
-const MainNavigator = createDrawerNavigator({
-  Blog: {
-    screen: BottomNavigator
+const CreateNavigator = createStackNavigator(
+  {
+    'Create Post': CreateScreen
   },
-  About: {
-    screen: AboutNavigator
+  {
+    defaultNavigationOptions: navigatorOptions
+  }
+)
+
+const AboutNavigator = createStackNavigator(
+  {
+    About: AboutScreen
   },
-  'Create Post': CreateNavigator
-})
+  {
+    defaultNavigationOptions: navigatorOptions
+  }
+)
+
+const MainNavigator = createDrawerNavigator(
+  {
+    Blog: {
+      screen: BottomNavigator,
+      navigationOptions: {
+        drawerLabel: 'Posts',
+        drawerIcon: <Ionicons name='home' size={20} color={THEME.MAIN_COLOR} />
+      }
+    },
+    About: {
+      screen: AboutNavigator
+    },
+    'Create Post': CreateNavigator
+  },
+  {
+    contentOptions: {
+      activeTintColor: THEME.MAIN_COLOR,
+      labelStyle: {
+        fontFamily: 'roboto-bold'
+      }
+    }
+  }
+)
 
 export const AppNavigation = createAppContainer(MainNavigator)
