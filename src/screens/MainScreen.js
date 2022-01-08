@@ -21,14 +21,14 @@ MainScreen.navigationOptions = ({ navigation }) => ({
       <Item
         title='Take photo'
         iconName='ios-camera'
-        onPress={() => console.log('camera')}
+        onPress={() => navigation.push('Create Post')}
       />
     </HeaderButtons>
   ),
   headerLeft: () => (
     <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
       <Item
-        title='Take photo'
+        title='Menu'
         iconName='ios-menu'
         onPress={() => navigation.toggleDrawer()}
       />
