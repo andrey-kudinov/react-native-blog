@@ -22,20 +22,20 @@ const navigatorOptions = {
   }
 }
 
-const BlogNavigator = createStackNavigator(
+const PostNavigator = createStackNavigator(
   {
-    'My blog': MainScreen,
+    Blog: MainScreen,
     Post: {
       screen: PostScreen
     }
   },
   {
-    initialRouteName: 'My blog',
+    initialRouteName: 'Blog',
     defaultNavigationOptions: navigatorOptions
   }
 )
 
-const bookmarkedNavigator = createStackNavigator(
+const BookmarkedNavigator = createStackNavigator(
   {
     BookmarkedScreen: BookmarkedScreen,
     'Post 2': PostScreen
@@ -46,8 +46,8 @@ const bookmarkedNavigator = createStackNavigator(
 )
 
 const bottomTabsConfig = {
-  Blog: {
-    screen: BlogNavigator,
+  Posts: {
+    screen: PostNavigator,
     navigationOptions: {
       tabBarLabel: 'Main',
       tabBarIcon: info => (
@@ -56,8 +56,9 @@ const bottomTabsConfig = {
     }
   },
   Bookmarked: {
-    screen: bookmarkedNavigator,
+    screen: BookmarkedNavigator,
     navigationOptions: {
+      tabBarLabel: 'Bookmarks',
       tabBarIcon: info => (
         <Ionicons name='ios-star' size={25} color={info.tintColor} />
       )
@@ -80,14 +81,22 @@ const BottomNavigator =
         }
       })
 
+const CreateNavigator = createStackNavigator({
+  'Create Post': CreateScreen
+}, navigatorOptions)
+
+const AboutNavigator = createStackNavigator({
+  About: AboutScreen
+}, navigatorOptions)
+
 const MainNavigator = createDrawerNavigator({
-  BlogTabs: {
+  Blog: {
     screen: BottomNavigator
   },
   About: {
-    screen: AboutScreen
+    screen: AboutNavigator
   },
-  Create: CreateScreen
+  'Create Post': CreateNavigator
 })
 
 export const AppNavigation = createAppContainer(MainNavigator)
