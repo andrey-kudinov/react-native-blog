@@ -3,10 +3,21 @@ import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { Ionicons } from '@expo/vector-icons'
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs'
 import { MainScreen } from '../screens/MainScreen'
 import { PostScreen } from '../screens/PostScreen'
 import { BookmarkedScreen } from '../screens/BookmarkedScreen'
 import { THEME } from '../theme'
+
+const navigatorOptions = {
+  headerStyle: {
+    backgroundColor: Platform === 'android' ? THEME.MAIN_COLOR : 'white'
+  },
+  headerTintColor: Platform === 'android' ? 'white' : THEME.MAIN_COLOR,
+  headerTitleStyle: {
+    fontFamily: 'roboto'
+  }
+}
 
 const BlogNavigator = createStackNavigator(
   {
@@ -17,15 +28,7 @@ const BlogNavigator = createStackNavigator(
   },
   {
     initialRouteName: 'My blog',
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: Platform === 'android' ? THEME.MAIN_COLOR : 'white'
-      },
-      headerTintColor: Platform === 'android' ? 'white' : THEME.MAIN_COLOR,
-      headerTitleStyle: {
-        fontFamily: 'roboto'
-      }
-    }
+    defaultNavigationOptions: navigatorOptions
   }
 )
 
@@ -35,19 +38,11 @@ const bookmarkedNavigator = createStackNavigator(
     'Post 2': PostScreen
   },
   {
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: Platform === 'android' ? THEME.MAIN_COLOR : 'white'
-      },
-      headerTintColor: Platform === 'android' ? 'white' : THEME.MAIN_COLOR,
-      headerTitleStyle: {
-        fontFamily: 'roboto'
-      }
-    }
+    defaultNavigationOptions: navigatorOptions
   }
 )
 
-const bottomNavigator = createBottomTabNavigator({
+const bottomTabsConfig = {
   Blog: {
     screen: BlogNavigator,
     navigationOptions: {
@@ -65,10 +60,21 @@ const bottomNavigator = createBottomTabNavigator({
       )
     }
   }
-}, {
-  tabBarOptions: {
-    activeTintColor: THEME.MAIN_COLOR
-  }
-})
+}
 
-export const AppNavigation = createAppContainer(bottomNavigator)
+const BottomNavigator =
+  Platform.OS === 'android'
+    ? createMaterialBottomTabNavigator(bottomTabsConfig, {
+        activeColor: 'white',
+        barStyle: {
+          backgroundColor: THEME.MAIN_COLOR
+        },
+        shifting: true
+      })
+    : createBottomTabNavigator(bottomTabsConfig, {
+        tabBarOptions: {
+          activeTintColor: THEME.MAIN_COLOR
+        }
+      })
+
+export const AppNavigation = createAppContainer(BottomNavigator)
