@@ -4,7 +4,6 @@ import {
   View,
   Image,
   Button,
-  ScrollView,
   Alert
 } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
@@ -32,7 +31,7 @@ export const PostScreen = ({ navigation }) => {
   }
 
   return (
-    <ScrollView>
+    <View>
       <Image style={styles.image} source={{ uri: post.img }} />
       <View style={styles.textWrapper}>
         <Text style={styles.title}>{post.text}</Text>
@@ -42,7 +41,7 @@ export const PostScreen = ({ navigation }) => {
         color={THEME.DANGER_COLOR}
         onPress={handleRemove}
       />
-    </ScrollView>
+    </View>
   )
 }
 

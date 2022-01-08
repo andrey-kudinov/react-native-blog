@@ -1,10 +1,11 @@
-import { StyleSheet, Text, Button, FlatList, ScrollView } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
-import { Post } from '../components/Post'
 import { DATA } from '../data'
 import { AppHeaderIcon } from '../components/AppHeaderIcon'
+import { PostList } from '../components/PostList'
 
 export const BookmarkedScreen = ({ navigation }) => {
+  const data = DATA.filter(post => post.bookmarked)
+
   const handleOpenPost = post => {
     navigation.navigate('Post', {
       postId: post.id,
@@ -13,15 +14,7 @@ export const BookmarkedScreen = ({ navigation }) => {
     })
   }
 
-  return (
-    <ScrollView style={styles.wrapper}>
-      <FlatList
-        data={DATA.filter(post => post.bookmarked)}
-        keyExtractor={post => post.id}
-        renderItem={({ item }) => <Post post={item} onOpen={handleOpenPost} />}
-      />
-    </ScrollView>
-  )
+  return <PostList data={data} onOpen={handleOpenPost} />
 }
 
 BookmarkedScreen.navigationOptions = {
@@ -36,9 +29,3 @@ BookmarkedScreen.navigationOptions = {
     </HeaderButtons>
   )
 }
-
-const styles = StyleSheet.create({
-  wrapper: {
-    padding: 10
-  }
-})

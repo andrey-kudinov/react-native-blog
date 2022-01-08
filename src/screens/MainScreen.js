@@ -1,8 +1,7 @@
-import { StyleSheet, Text, ScrollView, Button, FlatList } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
-import { Post } from '../components/Post'
 import { DATA } from '../data'
 import { AppHeaderIcon } from '../components/AppHeaderIcon'
+import { PostList } from '../components/PostList'
 
 export const MainScreen = ({ navigation }) => {
   const handleOpenPost = post => {
@@ -13,15 +12,7 @@ export const MainScreen = ({ navigation }) => {
     })
   }
 
-  return (
-    <ScrollView style={styles.wrapper}>
-      <FlatList
-        data={DATA}
-        keyExtractor={post => post.id}
-        renderItem={({ item }) => <Post post={item} onOpen={handleOpenPost} />}
-      />
-    </ScrollView>
-  )
+  return <PostList data={DATA} onOpen={handleOpenPost} />
 }
 
 MainScreen.navigationOptions = {
@@ -44,9 +35,3 @@ MainScreen.navigationOptions = {
     </HeaderButtons>
   )
 }
-
-const styles = StyleSheet.create({
-  wrapper: {
-    padding: 10
-  }
-})
