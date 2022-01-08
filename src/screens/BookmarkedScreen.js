@@ -1,10 +1,10 @@
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
-import { DATA } from '../data'
+import { useSelector } from 'react-redux'
 import { AppHeaderIcon } from '../components/AppHeaderIcon'
 import { PostList } from '../components/PostList'
 
 export const BookmarkedScreen = ({ navigation }) => {
-  const data = DATA.filter(post => post.bookmarked)
+  const bookmarkedPosts = useSelector(state => state.blog.bookmarkedPosts)
 
   const handleOpenPost = post => {
     navigation.navigate('Post', {
@@ -14,7 +14,7 @@ export const BookmarkedScreen = ({ navigation }) => {
     })
   }
 
-  return <PostList data={data} onOpen={handleOpenPost} />
+  return <PostList data={bookmarkedPosts} onOpen={handleOpenPost} />
 }
 
 BookmarkedScreen.navigationOptions = ({navigation}) => ({
