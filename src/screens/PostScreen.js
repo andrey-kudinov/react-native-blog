@@ -1,20 +1,33 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Button,
-  Alert
-} from 'react-native'
+import { useEffect, useCallback } from 'react'
+import { StyleSheet, Text, View, Image, Button, Alert } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { DATA } from '../data'
 import { THEME } from '../theme'
 import { AppHeaderIcon } from '../components/AppHeaderIcon'
+import { toggleBookmarked } from '../store/actions/postAction'
 
 export const PostScreen = ({ navigation }) => {
+  const dispatch = useDispatch()
   const postId = navigation.getParam('postId')
-
   const post = DATA.find(post => post.id === postId)
+
+  const isBookmarked = useSelector(state =>
+    state.blog.bookmarkedPosts.some(post => post.id === postId)
+  )
+
+  useEffect(() => {
+    console.log('isBookmarked -', isBookmarked)
+    navigation.setParams({ isBookmarked })
+  }, [isBookmarked])
+
+  const handleToggleBookmarked = useCallback(() => {
+    dispatch(toggleBookmarked(postId))
+  }, [dispatch, postId])
+
+  useEffect(() => {
+    navigation.setParams({ handleToggleBookmarked })
+  }, [handleToggleBookmarked])
 
   const handleRemove = () => {
     Alert.alert('Remove', 'Remove post', [
@@ -47,8 +60,9 @@ export const PostScreen = ({ navigation }) => {
 
 PostScreen.navigationOptions = ({ navigation }) => {
   const date = navigation.getParam('date'),
-    bookmarked = navigation.getParam('bookmarked'),
-    iconName = bookmarked ? 'ios-star' : 'ios-star-outline'
+    isBookmarked = navigation.getParam('isBookmarked'),
+    iconName = isBookmarked ? 'ios-star' : 'ios-star-outline',
+    handleToggleBookmarked = navigation.getParam('handleToggleBookmarked')
 
   return {
     title: `Post ${new Date(date).toLocaleDateString()}`,
@@ -57,7 +71,7 @@ PostScreen.navigationOptions = ({ navigation }) => {
         <Item
           title='Take photo'
           iconName={iconName}
-          onPress={() => console.log('camera')}
+          onPress={handleToggleBookmarked}
         />
       </HeaderButtons>
     )
