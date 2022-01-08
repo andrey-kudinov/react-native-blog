@@ -4,8 +4,11 @@ import { createStackNavigator } from 'react-navigation-stack'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { Ionicons } from '@expo/vector-icons'
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs'
+import { createDrawerNavigator } from 'react-navigation-drawer'
 import { MainScreen } from '../screens/MainScreen'
 import { PostScreen } from '../screens/PostScreen'
+import { AboutScreen } from '../screens/AboutScreen'
+import { CreateScreen } from '../screens/CreateScreen'
 import { BookmarkedScreen } from '../screens/BookmarkedScreen'
 import { THEME } from '../theme'
 
@@ -77,4 +80,14 @@ const BottomNavigator =
         }
       })
 
-export const AppNavigation = createAppContainer(BottomNavigator)
+const MainNavigator = createDrawerNavigator({
+  BlogTabs: {
+    screen: BottomNavigator
+  },
+  About: {
+    screen: AboutScreen
+  },
+  Create: CreateScreen
+})
+
+export const AppNavigation = createAppContainer(MainNavigator)
