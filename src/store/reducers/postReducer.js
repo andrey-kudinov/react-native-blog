@@ -1,4 +1,4 @@
-import { LOAD_POSTS, TOGGLE_BOOKMARKED } from '../types'
+import { LOAD_POSTS, TOGGLE_BOOKMARKED, REMOVE_POST } from '../types'
 
 const initialState = {
   posts: [],
@@ -26,6 +26,15 @@ export const postReducer = (state = initialState, action) => {
         ...state,
         posts,
         bookmarkedPosts: posts.filter(post => post.bookmarked)
+      }
+
+    case REMOVE_POST:
+      return {
+        ...state,
+        posts: state.posts.filter(post => post.id !== action.payload),
+        bookmarkedPosts: state.bookmarkedPosts.filter(
+          post => post.id !== action.payload
+        )
       }
 
     default:
