@@ -5,12 +5,14 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { DATA } from '../data'
 import { THEME } from '../theme'
 import { AppHeaderIcon } from '../components/AppHeaderIcon'
-import { toggleBookmarked } from '../store/actions/postAction'
+import { removePost, toggleBookmarked } from '../store/actions/postAction'
 
 export const PostScreen = ({ navigation }) => {
   const dispatch = useDispatch()
   const postId = navigation.getParam('postId')
-  const post = DATA.find(post => post.id === postId)
+  const post = useSelector(state =>
+    state.blog.posts.find(post => post.id === postId)
+  )
 
   const isBookmarked = useSelector(state =>
     state.blog.bookmarkedPosts.some(post => post.id === postId)
@@ -30,17 +32,33 @@ export const PostScreen = ({ navigation }) => {
   }, [handleToggleBookmarked])
 
   const handleRemove = () => {
-    Alert.alert('Remove', 'Remove post', [
-      {
-        text: 'Cancel',
-        style: 'cancel'
-      },
-      {
-        text: 'OK',
-        style: 'destructive',
-        onPress: () => console.log('OK Pressed')
-      }
-    ])
+    Alert.alert(
+      'Remove',
+      'Remove post',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel'
+        },
+        {
+          text: 'OK',
+          style: 'destructive',
+          onPress: () => {
+            console.log(2)
+          }
+        }
+      ],
+      { cancelable: false }
+    )
+  }
+
+  const handleRemoveImmediately = () => {
+    navigation.navigate('Blog')
+    dispatch(removePost(postId))
+  }
+
+  if (!post) {
+    return null
   }
 
   return (
@@ -52,7 +70,7 @@ export const PostScreen = ({ navigation }) => {
       <Button
         title={'Remove'}
         color={THEME.DANGER_COLOR}
-        onPress={handleRemove}
+        onPress={handleRemoveImmediately}
       />
     </View>
   )
