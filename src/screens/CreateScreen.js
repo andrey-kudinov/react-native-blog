@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import {
   StyleSheet,
   Text,
@@ -13,22 +13,28 @@ import {
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { useDispatch } from 'react-redux'
 import { AppHeaderIcon } from '../components/AppHeaderIcon'
+import { PhotoPicker } from '../components/PhotoPicker'
 import { addPost } from '../store/actions/postAction'
 import { THEME } from '../theme'
 
 export const CreateScreen = ({navigation}) => {
   const [text, setText] = useState('')
   const dispatch = useDispatch()
+  const imgRef = useRef()
 
   const handleCreate = () => {
     const post = {
       date: new Date().toJSON(),
       text,
-      img: 'https://static.coindesk.com/wp-content/uploads/2019/01/shutterstock_1012724596-860x430.jpg',
+      img: imgRef.current,
       bookmarked: false
     }
     dispatch(addPost(post))
     navigation.navigate('Blog')
+  }
+
+  const photoPickHandler = uri => {
+    imgRef.current = uri
   }
 
   return (
@@ -45,12 +51,13 @@ export const CreateScreen = ({navigation}) => {
             numberOfLines={4}
           />
 
-          {/* <Image /> */}
+          <PhotoPicker ref={imgRef} onPick={photoPickHandler}/>
 
           <Button
             title='Create Post'
             color={THEME.MAIN_COLOR}
             onPress={handleCreate}
+            disabled={!text}
           />
         </View>
       {/* </TouchableWithoutFeedback> */}
