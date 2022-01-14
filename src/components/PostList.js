@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   text: {
-    fontFamily: '',
+    fontFamily: 'roboto',
     textAlign: 'center',
     marginVertical: 10,
     fontSize: 18,
