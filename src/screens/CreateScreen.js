@@ -19,6 +19,7 @@ import { THEME } from '../theme'
 
 export const CreateScreen = ({navigation}) => {
   const [text, setText] = useState('')
+  const [img, setImg] = useState('')
   const dispatch = useDispatch()
   const imgRef = useRef()
 
@@ -26,7 +27,7 @@ export const CreateScreen = ({navigation}) => {
     const post = {
       date: new Date().toJSON(),
       text,
-      img: imgRef.current,
+      img,
       bookmarked: false
     }
     dispatch(addPost(post))
@@ -34,7 +35,7 @@ export const CreateScreen = ({navigation}) => {
   }
 
   const photoPickHandler = uri => {
-    imgRef.current = uri
+    setImg(uri)
   }
 
   return (
@@ -51,7 +52,7 @@ export const CreateScreen = ({navigation}) => {
             numberOfLines={4}
           />
 
-          <PhotoPicker ref={imgRef} onPick={photoPickHandler}/>
+          <PhotoPicker onPick={photoPickHandler}/>
 
           <Button
             title='Create Post'
