@@ -1,10 +1,9 @@
-import { DATA } from "../../data"
 import { LOAD_POSTS, REMOVE_POST, TOGGLE_BOOKMARKED, ADD_POST } from "../types"
 
 export const loadPosts = () => {
   return {
     type: LOAD_POSTS,
-    payload: DATA
+    payload: []
   }
 }
 
