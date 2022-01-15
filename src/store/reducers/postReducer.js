@@ -2,7 +2,8 @@ import { LOAD_POSTS, TOGGLE_BOOKMARKED, REMOVE_POST, ADD_POST } from '../types'
 
 const initialState = {
   posts: [],
-  bookmarkedPosts: []
+  bookmarkedPosts: [],
+  loading: true
 }
 
 export const postReducer = (state = initialState, action) => {
@@ -11,7 +12,8 @@ export const postReducer = (state = initialState, action) => {
       return {
         ...state,
         posts: action.payload,
-        bookmarkedPosts: action.payload.filter(post => post.bookmarked)
+        bookmarkedPosts: action.payload.filter(post => post.bookmarked),
+        loading: false
       }
 
     case TOGGLE_BOOKMARKED:
