@@ -23,8 +23,8 @@ export const PostScreen = ({ navigation }) => {
   }, [isBookmarked])
 
   const handleToggleBookmarked = useCallback(() => {
-    dispatch(toggleBookmarked(postId))
-  }, [dispatch, postId])
+    dispatch(toggleBookmarked(post))
+  }, [dispatch, post])
 
   useEffect(() => {
     navigation.setParams({ handleToggleBookmarked })
